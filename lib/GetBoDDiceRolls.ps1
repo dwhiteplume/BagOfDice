@@ -6,7 +6,16 @@ function Get-BoDDiceRolls {
     The number of sides on the die to roll. Must be a positive integer.
     .EXAMPLE
     Get-BoDDiceRolls -Dice 3 -Side 6
-    Returns 3 to 18
+    Returns an object like:
+
+    DiceRolls         : {4, 5, 4}
+    Count             : 3
+    Average           : 4.33333333333333
+    Sum               : 13
+    Maximum           : 5
+    Minimum           : 4
+    StandardDeviation : 0.577350269189626
+    Property          : 
     .EXAMPLE
     Get-BoDDiceRolls 3 6
     Returns 3 to 18
@@ -39,6 +48,7 @@ function Get-BoDDiceRolls {
         $Results.Add($(Get-BoDDieRoll -Sides $Sides))
     })
     $Statistics = $Results | Measure-Object -Sum -Average -Maximum -Minimum -StandardDeviation
+    $Statistics | Add-Member -MemberType NoteProperty -Name DiceRolls -Value $Results
     $Statistics | Get-Member | Where-Object -Property MemberType -eq Property | Select-Object -ExpandProperty Name | ForEach-Object { Write-Verbose "$PSItem = $($Statistics.$PSItem)" }
     Write-Output $Statistics
 }
