@@ -40,12 +40,36 @@ function Get-BoDCoinFlip {
     Performs a coin flip. Can return heads or tails, 0 or 1, and true or false. 
     .AUTHOR Darius Whiteplume
     .PROJECTURI https://dwhiteplume.github.io/BagOfDice/
+    .PARAMETER ResultType
+    You can choose from Coin, Binary, or Boolean
     .EXAMPLE
     Get-BoDCoinFlip -ResultType Coin
+
+    Returns 'Heads' or 'Tails'
+
+    IsPublic : True
+    IsSerial : 
+    Name     : String
+    BaseType : System.Object
+
     .EXAMPLE
     Get-BoDCoinFlip -ResultType Binary
+
+    Returns 0 or 1
+
+    IsPublic : True
+    IsSerial : 
+    Name     : Int32
+    BaseType : System.ValueType
     .EXAMPLE
     Get-BoDCoinFlip -ResultType Boolean
+
+    Returns True or False
+
+    IsPublic : True
+    IsSerial : 
+    Name     : Boolean
+    BaseType : System.ValueType
     #>
     [CmdletBinding()]
     param(
