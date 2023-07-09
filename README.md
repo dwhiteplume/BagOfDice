@@ -14,7 +14,19 @@ Binary | int32 | 0, 1
 Boolean | bool | True, False
 
 ## Get-BoDDiceRolls
-Rolls a number of same dice based on provided number of dice and number of sides.
+Rolls a number of same dice based on provided number of dice and number of sides. Returns an object with various statistics and information about the request:
+
+```
+DiceRolls         : {5, 6, 5}
+Count             : 3
+Average           : 5.33333333333333
+Sum               : 16
+Maximum           : 6
+Minimum           : 5
+StandardDeviation : 0.577350269189626
+Request           : Get-BoDDiceRolls -Dice 3 -Sides 6
+StandardNotation  : 3d6
+```
 ## Get-BoDDieRoll
 Rolls a single die of the provided number of sides.
 ## Get-BoDFudge
