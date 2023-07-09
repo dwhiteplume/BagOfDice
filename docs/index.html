@@ -79,6 +79,13 @@ used by <code>Get-BoDDiceRolls</code>.</p>
 <a href="https://en.wikipedia.org/wiki/Fudge_%28role-playing_game_system%29">
 Fudge (role-playing game system)</a> at Wikipedia<a>)</i></p>
 <blockquote>Enhancement request: add an option to just roll a 4dF?</blockquote>
+<h3>Get-BoDPercentileRoll</h3>
+<p>Rolls 2d10 with <code>Get-BoDDieRoll -Dice 2 -Sides 10</code> and creates a string 
+to mimic using dice, despite whatever, if any, difference between 2d10 and 1d100. 
+By default it returns 1-100, but with the <code>-Zero</code> switch you will have a 
+0-99 range.</p>
+<blockquote>Enhancement request: make this a 2dAny option to support random tables like 
+the fairly common 2d6 grid.</blockquote>
 <!--
 <p>
 <a href="http://validator.w3.org/check?uri=referer">
