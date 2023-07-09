@@ -46,6 +46,31 @@ by <a rel="me" href="https://tech.lgbt/@dariusw">@dariusw@tech.lgbt</a>
     <td>True, False</td>
   </tr>
 </table>
+<h3>Get-BoDDiceRolls</h3>
+<p>This function allows you to specify how many dice of a single type to roll.</p>
+<pre>
+# Example
+
+Get-BoDDiceRolls -Dice 3 -Side 6
+
+# Rolls 3d6 (three six-sided dice)
+
+# Results are like:
+
+DiceRolls         : {5, 5, 3}
+Count             : 3
+Average           : 4.33333333333333
+Sum               : 13
+Maximum           : 5
+Minimum           : 3
+StandardDeviation : 1.15470053837925
+Request           : Get-BoDDiceRolls -Dice 3 -Side 6
+StandardNotation  : 3d6
+</pre>
+<p>The resulting object includes the dice rolled (generic list), sum of the rolls, 
+the issued command (Request), standard dice notation, and statistics provided by 
+the <code>Measure-Object</code> commandlet.</p>
+
 <!--
 <p>
 <a href="http://validator.w3.org/check?uri=referer">
