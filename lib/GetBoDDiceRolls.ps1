@@ -51,5 +51,6 @@ function Get-BoDDiceRolls {
     $Statistics.Property = $MyInvocation | Select-Object -ExpandProperty Line
     $Statistics | Add-Member -MemberType NoteProperty -Name DiceRolls -Value $Results
     $Statistics | Get-Member | Where-Object -Property MemberType -eq Property | Select-Object -ExpandProperty Name | ForEach-Object { Write-Verbose "$PSItem = $($Statistics.$PSItem)" }
-    Write-Output $Statistics
+    $Report = $Statistics | Select-Object -Property DiceRolls,Count,Average,Sum,Maximum,Minimum,StandardDeviation,@{Label = 'Request';Expression = { $PSItem.Property }},@{Label = 'StandardNotation';Expression = {"$($Dice)d$($Sides)"}}
+    Write-Output $Report
 }
