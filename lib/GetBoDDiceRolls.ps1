@@ -20,7 +20,7 @@ function Get-BoDDiceRolls {
     Get-BoDDiceRolls 3 6
     Returns 3 to 18
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'FidgeDice')]
     param(
         [ValidateScript({
             if ($PSItem -gt 0) {
@@ -29,8 +29,23 @@ function Get-BoDDiceRolls {
                 throw "Value must be greater than zero."
             }
         })]
-        [Parameter(Position = 0, Mandatory = $true)]
+        [Parameter(
+            Position = 0, 
+            Mandatory = $true,
+            ParameterSetName = 'FidgeDice',
+            HelpMessage = 'The number of dice to roll.'
+        )]
+        [Parameter(
+            ParameterSetName = 'Numbers'
+        )]
         [int32]$Dice,
+        [Parameter(
+            Position = 1, 
+            Mandatory = $true,
+            ParameterSetName = 'FidgeDice',
+            HelpMessage = 'Rolls Fudge dice.'
+        )]
+        [switch]$Fudge,
         [ValidateScript({
             if ($PSItem -gt 0) {
                 $true
@@ -38,6 +53,12 @@ function Get-BoDDiceRolls {
                 throw "Value must be greater than zero."
             }
         })]
+        [Parameter(
+            Position = 1, 
+            Mandatory = $true,
+            ParameterSetName = 'Numbers',
+            HelpMessage = 'The number of sides on the each die.'
+        )]
         [Parameter(Position = 1, Mandatory = $true)]
         [int32]$Sides
     )
@@ -45,7 +66,13 @@ function Get-BoDDiceRolls {
     $Results = New-Object "System.Collections.Generic.List[int32]"
     $Rolls = 1..$Dice
     $Rolls.ForEach({
-        $Results.Add($(Get-BoDDieRoll -Sides $Sides))
+        $Results.Add($(
+            if($Fudge){
+                Get-BoDFudge
+            } else {
+                Get-BoDDieRoll -Sides $Sides
+            }
+        ))
     })
     $Statistics = $Results | Measure-Object -Sum -Average -Maximum -Minimum -StandardDeviation
     $Statistics.Property = $MyInvocation | Select-Object -ExpandProperty Line
