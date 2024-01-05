@@ -1,6 +1,11 @@
 $BagOfDice = [pscustomobject]@{}
 
 $BagOfDice | Add-Member `
+    -MemberType NoteProperty `
+    -Name Statistics `
+    -Value $null
+
+$BagOfDice | Add-Member `
     -MemberType ScriptMethod `
     -Name DieRoll `
     -Value {
@@ -38,6 +43,7 @@ $BagOfDice | Add-Member `
             [Parameter(Position = 1, Mandatory = $true)]
             [int32]$Sides
         )
+        $this.Statistics = $null
         $Results = New-Object "System.Collections.Generic.List[int32]"
         $Rolls = 1..$Dice
         $Rolls.ForEach({
@@ -47,8 +53,29 @@ $BagOfDice | Add-Member `
         $Statistics.Property = $MyInvocation | Select-Object -ExpandProperty Line
         $Statistics | Add-Member -MemberType NoteProperty -Name DiceRolls -Value $Results
         $Statistics | Get-Member | Where-Object -Property MemberType -eq Property | Select-Object -ExpandProperty Name | ForEach-Object { Write-Verbose "$PSItem = $($Statistics.$PSItem)" }
-        $Report = $Statistics | Select-Object -Property DiceRolls,Count,Average,Sum,Maximum,Minimum,StandardDeviation,@{Label = 'Request';Expression = { $PSItem.Property }},@{Label = 'StandardNotation';Expression = {"$($Dice)d$($Sides)"}}
-        Write-Output $Report
+        $Report = $Statistics | `
+            Select-Object `
+            -Property `
+                DiceRolls,
+                Count,
+                Average,
+                Sum,
+                Maximum,
+                Minimum,
+                StandardDeviation,
+                @{
+                    Label = 'Request'
+                    Expression = { 
+                        $PSItem.Property 
+                    }
+                },
+                @{
+                    Label = 'StandardNotation'
+                    Expression = {"$($Dice)d$($Sides)"
+                }
+            }
+        $this.Statistics = $Report
+        Write-Output $Report.Sum
     }
 
 $BagOfDice | Add-Member `
@@ -77,6 +104,7 @@ $BagOfDice | Add-Member `
             [Parameter(Position = 0, Mandatory = $true)]
             [int32]$Dice
         )
+        $this.Statistics = $null
         $Results = New-Object "System.Collections.Generic.List[int32]"
         $Rolls = 1..$Dice
         $Rolls.ForEach({
@@ -86,8 +114,29 @@ $BagOfDice | Add-Member `
         $Statistics.Property = $MyInvocation | Select-Object -ExpandProperty Line
         $Statistics | Add-Member -MemberType NoteProperty -Name DiceRolls -Value $Results
         $Statistics | Get-Member | Where-Object -Property MemberType -eq Property | Select-Object -ExpandProperty Name | ForEach-Object { Write-Verbose "$PSItem = $($Statistics.$PSItem)" }
-        $Report = $Statistics | Select-Object -Property DiceRolls,Count,Average,Sum,Maximum,Minimum,StandardDeviation,@{Label = 'Request';Expression = { $PSItem.Property }},@{Label = 'StandardNotation';Expression = {"$($Dice)d$($Sides)"}}
-        Write-Output $Report
+        $Report = $Statistics | `
+            Select-Object `
+            -Property `
+                DiceRolls,
+                Count,
+                Average,
+                Sum,
+                Maximum,
+                Minimum,
+                StandardDeviation,
+                @{
+                    Label = 'Request'
+                    Expression = { 
+                        $PSItem.Property 
+                    }
+                },
+                @{
+                    Label = 'StandardNotation'
+                    Expression = {"$($Dice)dF"
+                }
+            }
+        $this.Statistics = $Report
+        Write-Output $Report.Sum
     }
 
 $BagOfDice | Add-Member `
