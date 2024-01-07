@@ -165,3 +165,5 @@ $BagOfDice | Add-Member `
         $Result = @('Heads','Tails') | Get-Random
         Write-Output $Result
     }
+
+# add a .ClearStatistics() method and use it in other methods where needed.
